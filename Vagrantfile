@@ -17,8 +17,8 @@ Vagrant.configure("2") do |config|
     config.vm.define "zookeeper#{i}" do |s|
       s.vm.hostname = "zookeeper#{i}"
       s.vm.network "private_network", ip: "192.168.33.#{i+14}", netmask: "255.255.255.0", virtualbox__intnet: "replic-network"
-	  s.vm.network "forwarded_port", guest: "818#{i}", host: 9092
-	  s.vm.network "forwarded_port", guest: "224#{i}", host: 22
+	  s.vm.network "forwarded_port", guest: 9092, host: "818#{i}"
+	  s.vm.network "forwarded_port", guest: 22, host: "224#{i}"
 
       s.vm.provision "shell" do |cmd|
         cmd.inline = "echo $1 > /tmp/zookeeper/myid && su -l -c 'cp /vagrant/config/zoo.cfg /opt/zookeeper/conf && zkServer.sh start' zookeeper"
